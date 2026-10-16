@@ -31,7 +31,7 @@ export default function Header() {
                 LANKA<span className="text-gold-500">360</span>
               </span>
               <p className="text-[10px] tracking-widest uppercase text-slate-500 dark:text-slate-400 -mt-1 font-semibold">
-                Luxury Sri Lanka Tours
+                TRAVELS AND TOURS
               </p>
             </div>
           </Link>

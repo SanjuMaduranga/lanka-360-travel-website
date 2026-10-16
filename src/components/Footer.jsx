@@ -36,14 +36,16 @@ export default function Footer() {
                   LANKA<span className="text-gold-500">360</span>
                 </span>
                 <p className="text-[10px] tracking-widest uppercase text-slate-400 -mt-1 font-semibold">
-                  Luxury Sri Lanka Tours
+                  TRAVELS AND TOURS
                 </p>
               </div>
             </Link>
             <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6 max-w-sm">
-              Experience bespoke journeys across Sri Lanka with luxury private
-              chauffeurs, 5-star heritage stays, safari excursions, and scenic
-              hill country trains.
+              Explore Sri Lanka with unforgettable tour packages, affordable travel services, 
+              and experienced local tour guides. From beautiful beaches and ancient cultural 
+              sites to wildlife safaris, scenic hill country journeys, and authentic local experiences, 
+              we help you discover the best of Sri Lanka with comfortable transport, personalized tours, 
+              and memorable holidays.
             </p>
             <div className="flex items-center space-x-3 text-sm">
               <a
@@ -127,12 +129,12 @@ export default function Footer() {
             <ul className="space-y-3 text-xs sm:text-sm text-slate-300">
               <li className="flex items-start space-x-2.5">
                 <i className="fas fa-map-marker-alt text-gold-500 mt-1" />
-                <span>No 142, Galle Road, Colombo 03, Sri Lanka</span>
+                <span>No 123, Main Street, Ratnapura, Sri Lanka</span>
               </li>
               <li className="flex items-center space-x-2.5">
                 <i className="fas fa-phone-alt text-gold-500" />
-                <a href="tel:+94771234567" className="hover:text-gold-400 transition">
-                  +94 77 123 4567
+                <a href="tel:+94725879636" className="hover:text-gold-400 transition">
+                  +94 72 587 9636
                 </a>
               </li>
               <li className="flex items-center space-x-2.5">
@@ -141,7 +143,7 @@ export default function Footer() {
                   href="mailto:info@lanka360.com"
                   className="hover:text-gold-400 transition"
                 >
-                  info@lanka360.com
+                  lanka360sachith@gmail.com
                 </a>
               </li>
             </ul>
@@ -156,7 +158,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-4">
-          <p>&copy; {new Date().getFullYear()} Lanka 360 Luxury Travels. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Lanka 360 Travels & Tours. All Rights Reserved.</p>
           <div className="flex space-x-6 text-slate-400">
             <Link to="/privacy" className="hover:text-gold-400 transition">
               Privacy Policy

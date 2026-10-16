@@ -15,18 +15,18 @@ export default function TopBar() {
         <div className="flex items-center space-x-6">
           <a href="tel:+94771234567" className="hover:text-gold-400 transition">
             <i className="fas fa-phone-alt text-gold-500 mr-2" />
-            +94 77 123 4567
+            +94 72 587 9636
           </a>
           <a
             href="mailto:info@lanka360.com"
             className="hidden sm:inline-block hover:text-gold-400 transition"
           >
             <i className="fas fa-envelope text-gold-500 mr-2" />
-            info@lanka360.com
+            lanka360sachith@gmail.com
           </a>
           <span className="hidden md:inline-block">
             <i className="fas fa-map-marker-alt text-gold-500 mr-2" />
-            Colombo &amp; Kandy, Sri Lanka
+            Ratnapura, Sri Lanka
           </span>
         </div>
 

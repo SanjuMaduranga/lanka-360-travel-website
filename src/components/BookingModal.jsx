@@ -160,7 +160,7 @@ export default function BookingModal({ isOpen, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-[fadeIn_0.2s_ease-out]"
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-6 overflow-y-auto animate-[fadeIn_0.2s_ease-out]"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -174,7 +174,7 @@ export default function BookingModal({ isOpen, onClose }) {
 
       {/* Modal Card */}
       <div
-        className="relative w-full max-w-2xl my-4 sm:my-8 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-[slideUp_0.3s_ease-out]"
+        className="relative w-full max-w-2xl my-4 sm:my-8 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-[slideUp_0.3s_ease-out] sm:max-h-[90vh] sm:flex sm:flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* ─── CLOSE BUTTON ─── */}
@@ -201,7 +201,7 @@ export default function BookingModal({ isOpen, onClose }) {
         </button>
 
         {/* ─── HEADER ─── */}
-        <div className="relative bg-gradient-to-br from-ocean-900 via-ocean-800 to-slate-900 text-white px-6 sm:px-8 py-7 pr-20">
+        <div className="relative rounded-t-3xl overflow-hidden bg-gradient-to-br from-ocean-900 via-ocean-800 to-slate-900 text-white px-6 sm:px-8 py-7 pr-20 shrink-0">
           <div className="absolute -top-10 -right-10 w-40 h-40 bg-gold-500/20 rounded-full blur-3xl pointer-events-none" />
 
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-400 text-[10px] font-bold uppercase tracking-widest mb-3 backdrop-blur-sm">
@@ -221,7 +221,7 @@ export default function BookingModal({ isOpen, onClose }) {
         </div>
 
         {/* ─── BODY ─── */}
-        <div className="p-6 sm:p-8 max-h-[70vh] overflow-y-auto">
+        <div className="p-6 sm:p-8 sm:overflow-y-auto sm:flex-1">
           {/* Package summary strip */}
           {selectedPkg && (
             <div className="mb-6 p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-800/60 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-4">
@@ -505,19 +505,11 @@ export default function BookingModal({ isOpen, onClose }) {
         </div>
 
         {/* ─── FOOTER ─── */}
-        <div className="px-6 sm:px-8 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-wrap">
+        <div className="px-6 sm:px-8 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-wrap rounded-b-3xl shrink-0">
           <p className="text-[11px] text-slate-500 dark:text-slate-400">
             <i className="fas fa-shield-alt text-gold-500 mr-1.5" />
             Lanka 360 · SLTDA Licensed TS/2026/0412
           </p>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition inline-flex items-center gap-1.5 uppercase tracking-wider"
-          >
-            <i className="fas fa-times" />
-            Close Window
-          </button>
         </div>
       </div>
     </div>

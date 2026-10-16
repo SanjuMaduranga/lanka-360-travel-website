@@ -4,19 +4,19 @@ import { useNavigate } from 'react-router-dom';
 const heroSlides = [
   {
     image:
-      'https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1519566335946-e6f65f0f4fdf?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     title: 'Discover The Pearl of',
     highlight: 'The Indian Ocean',
   },
   {
     image:
-      'https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1708338914870-797de586672d?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     title: 'Misty Hills &',
     highlight: 'Emerald Tea Estates',
   },
   {
     image:
-      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1920&q=80',
+      'https://images.unsplash.com/photo-1628058733047-3b73ee23a164?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     title: 'Wild Safaris &',
     highlight: 'Turquoise Beaches',
   },

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const RECEIVING_EMAIL = 'YOUR_EMAIL_HERE@lanka360.com';
 const WHATSAPP_NUMBER = '94771234567';
@@ -16,10 +16,12 @@ const emptyForm = {
 
 export default function PackageBookingModal({ isOpen, onClose, pkg }) {
   const [form, setForm] = useState(emptyForm);
-  const [status, setStatus] = useState(null); // 'success' | 'error' | null
+  const [status, setStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const bodyRef = useRef(null);
 
-  // Lock body scroll + Escape key. No setState in effect → no warnings.
+  // Lock body scroll + Escape key. No setState here.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -37,19 +39,23 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
     };
   }, [isOpen, onClose]);
 
+
   if (!isOpen || !pkg) return null;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ─── Derived values ───
+  const handleBodyScroll = (e) => {
+    setIsScrolled(e.currentTarget.scrollTop > 40);
+  };
+
+
+  // Derived values
   const nights = pkg.durationDays - 1;
   const adults = Math.max(1, Number(form.adults) || 1);
   const children = Math.max(0, Number(form.children) || 0);
   const rooms = Math.ceil(adults / 2);
-
-  // Base price per room
   const unitPrice = pkg.priceUSD ?? 0;
   const estimatedTotal = unitPrice * Math.max(1, rooms);
 
@@ -90,7 +96,6 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     try {
-      // ─── 1. Email via FormSubmit.co ───
       await fetch(`https://formsubmit.co/ajax/${RECEIVING_EMAIL}`, {
         method: 'POST',
         headers: {
@@ -117,21 +122,17 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
           })`,
           Message: form.message,
         }),
-      }).catch(() => {
-        // Non-fatal — WhatsApp fallback still works
-      });
+      }).catch(() => {});
     } catch (err) {
       console.error('Email send failed:', err);
     }
 
-    // ─── 2. WhatsApp — same tab on mobile, new tab on desktop ───
     if (isMobile) {
       window.location.assign(whatsappURL);
     } else {
       window.open(whatsappURL, '_blank', 'noopener,noreferrer');
     }
 
-    // ─── 3. Success state + auto-close ───
     setStatus('success');
     setSubmitting(false);
 
@@ -143,7 +144,7 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-[fadeIn_0.2s_ease-out]"
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-6 overflow-y-auto animate-[fadeIn_0.2s_ease-out]"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -157,7 +158,7 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
 
       {/* Modal card */}
       <div
-        className="relative w-full max-w-3xl my-4 sm:my-8 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-[slideUp_0.3s_ease-out]"
+        className="relative w-full max-w-3xl my-4 sm:my-8 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-[slideUp_0.3s_ease-out] sm:max-h-[92vh] sm:flex sm:flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* ─── CLOSE BUTTON ─── */}
@@ -183,16 +184,35 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
           <span className="sr-only">Close</span>
         </button>
 
-        {/* ─── HERO ─── */}
-        <div className="relative h-56 sm:h-72 overflow-hidden rounded-t-3xl">
+        {/* ─── SMART STICKY HERO (shrinks on scroll) ─── */}
+        <div
+          className={`relative overflow-hidden rounded-t-3xl shrink-0 transition-all duration-500 ease-out ${
+            isScrolled ? 'h-20 sm:h-24' : 'h-56 sm:h-72'
+          }`}
+        >
           <img
             src={pkg.image}
             alt={pkg.title}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover transition-all duration-500 ${
+              isScrolled ? 'opacity-90' : 'opacity-100'
+            }`}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10" />
+          <div
+            className={`absolute inset-0 transition-all duration-500 ${
+              isScrolled
+                ? 'bg-gradient-to-r from-slate-900 via-slate-900/85 to-slate-900/60'
+                : 'bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10'
+            }`}
+          />
 
-          <div className="absolute top-4 left-4 flex flex-wrap gap-2 pr-16">
+          {/* Top badges — hide when scrolled */}
+          <div
+            className={`absolute top-4 left-4 flex flex-wrap gap-2 pr-16 transition-all duration-300 ${
+              isScrolled
+                ? 'opacity-0 -translate-y-2 pointer-events-none'
+                : 'opacity-100 translate-y-0'
+            }`}
+          >
             <span className="bg-gold-500 text-ocean-900 text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
               <i className="fas fa-crown mr-1" />
               {pkg.category || 'Signature'}
@@ -207,7 +227,14 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
             </span>
           </div>
 
-          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-7">
+          {/* Title block — full mode */}
+          <div
+            className={`absolute bottom-0 left-0 right-0 p-6 sm:p-7 transition-all duration-500 ${
+              isScrolled
+                ? 'opacity-0 translate-y-4 pointer-events-none'
+                : 'opacity-100 translate-y-0'
+            }`}
+          >
             <h2
               id="packageBookingTitle"
               className="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight drop-shadow-md"
@@ -218,10 +245,41 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
               {pkg.tagline}
             </p>
           </div>
+
+          {/* Compact title — appears when scrolled */}
+          <div
+            className={`absolute inset-0 flex items-center gap-3 px-5 sm:px-6 pr-20 transition-all duration-500 ${
+              isScrolled
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-4 pointer-events-none'
+            }`}
+          >
+            <img
+              src={pkg.image}
+              alt=""
+              aria-hidden="true"
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg object-cover border border-gold-500/40 shadow-md shrink-0 hidden sm:block"
+            />
+            <div className="min-w-0 flex-1">
+              <span className="text-[9px] uppercase tracking-widest text-gold-400 font-extrabold block mb-0.5">
+                Booking · {pkg.category || 'Signature'}
+              </span>
+              <h3 className="font-serif text-sm sm:text-base font-bold text-white truncate leading-tight">
+                {pkg.title}
+              </h3>
+              <span className="text-[10px] text-slate-300 mt-0.5 block">
+                ${unitPrice.toLocaleString()} · {pkg.durationDays}D/{nights}N
+              </span>
+            </div>
+          </div>
         </div>
 
-        {/* ─── BODY ─── */}
-        <div className="p-6 sm:p-8">
+        {/* ─── BODY (scrollable, tracks scroll) ─── */}
+        <div
+          ref={bodyRef}
+          onScroll={handleBodyScroll}
+          className="p-6 sm:p-8 sm:overflow-y-auto sm:flex-1"
+        >
           {/* Summary strip */}
           <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-800/60 border border-slate-200 dark:border-slate-700 shadow-sm">
             <div className="text-center px-1">
@@ -250,10 +308,8 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
             </div>
           </div>
 
-          {/* Divider */}
           <div className="h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent mb-6" />
 
-          {/* Success / Form */}
           {status === 'success' ? (
             <div className="p-8 rounded-2xl bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-950/40 dark:to-slate-900 border-2 border-emerald-300 dark:border-emerald-700 text-center">
               <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500 text-white flex items-center justify-center text-3xl mb-4 shadow-lg shadow-emerald-500/30">
@@ -485,19 +541,11 @@ export default function PackageBookingModal({ isOpen, onClose, pkg }) {
         </div>
 
         {/* ─── FOOTER ─── */}
-        <div className="px-6 sm:px-8 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-wrap">
+        <div className="px-6 sm:px-8 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-wrap rounded-b-3xl shrink-0">
           <p className="text-[11px] text-slate-500 dark:text-slate-400">
             <i className="fas fa-shield-alt text-gold-500 mr-1.5" />
             Lanka 360 · SLTDA Licensed TS/2026/0412
           </p>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition inline-flex items-center gap-1.5 uppercase tracking-wider"
-          >
-            <i className="fas fa-times" />
-            Close Window
-          </button>
         </div>
       </div>
     </div>

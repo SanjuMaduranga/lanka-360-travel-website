@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function PackageItineraryModal({
   pkg,
@@ -6,6 +6,9 @@ export default function PackageItineraryModal({
   onClose,
   onReserve,
 }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const bodyRef = useRef(null);
+
   // Lock scroll + Escape key
   useEffect(() => {
     if (!isOpen) return;
@@ -29,9 +32,13 @@ export default function PackageItineraryModal({
   // Use base price — no tiers anymore
   const basePrice = pkg.priceUSD ?? 0;
 
+  const handleBodyScroll = (e) => {
+    setIsScrolled(e.currentTarget.scrollTop > 40);
+  };
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-[fadeIn_0.2s_ease-out]"
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-6 overflow-y-auto animate-[fadeIn_0.2s_ease-out]"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -45,7 +52,7 @@ export default function PackageItineraryModal({
 
       {/* Card */}
       <div
-        className="relative w-full max-w-5xl my-4 sm:my-8 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-[slideUp_0.3s_ease-out]"
+        className="relative w-full max-w-5xl my-4 sm:my-8 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-[slideUp_0.3s_ease-out] sm:max-h-[92vh] sm:flex sm:flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* ─── CLOSE BUTTON ─── */}
@@ -71,17 +78,35 @@ export default function PackageItineraryModal({
           <span className="sr-only">Close</span>
         </button>
 
-        {/* ─── HERO IMAGE ─── */}
-        <div className="relative h-64 sm:h-80 overflow-hidden">
+        {/* ─── SMART STICKY HERO (shrinks on scroll) ─── */}
+        <div
+          className={`relative overflow-hidden rounded-t-3xl shrink-0 transition-all duration-500 ease-out ${
+            isScrolled ? 'h-20 sm:h-24' : 'h-64 sm:h-80'
+          }`}
+        >
           <img
             src={pkg.image}
             alt={pkg.title}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover transition-all duration-500 ${
+              isScrolled ? 'opacity-90' : 'opacity-100'
+            }`}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10" />
+          <div
+            className={`absolute inset-0 transition-all duration-500 ${
+              isScrolled
+                ? 'bg-gradient-to-r from-slate-900 via-slate-900/85 to-slate-900/60'
+                : 'bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10'
+            }`}
+          />
 
-          {/* Top badges */}
-          <div className="absolute top-4 left-4 flex flex-wrap gap-2 pr-16">
+          {/* Top badges — fade out when scrolled */}
+          <div
+            className={`absolute top-4 left-4 flex flex-wrap gap-2 pr-16 transition-all duration-300 ${
+              isScrolled
+                ? 'opacity-0 -translate-y-2 pointer-events-none'
+                : 'opacity-100 translate-y-0'
+            }`}
+          >
             <span className="bg-gold-500 text-ocean-900 text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
               <i className="fas fa-crown mr-1" />
               {pkg.category || 'Signature'}
@@ -96,8 +121,14 @@ export default function PackageItineraryModal({
             </span>
           </div>
 
-          {/* Title block */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+          {/* Full title block — fades out when scrolled */}
+          <div
+            className={`absolute bottom-0 left-0 right-0 p-6 sm:p-8 transition-all duration-500 ${
+              isScrolled
+                ? 'opacity-0 translate-y-4 pointer-events-none'
+                : 'opacity-100 translate-y-0'
+            }`}
+          >
             <span className="text-gold-300 text-[10px] sm:text-xs font-bold uppercase tracking-widest block mb-1.5">
               <i className="fas fa-route mr-1.5" />
               Day-by-Day Bespoke Itinerary
@@ -112,10 +143,41 @@ export default function PackageItineraryModal({
               {pkg.tagline}
             </p>
           </div>
+
+          {/* Compact bar — fades in when scrolled */}
+          <div
+            className={`absolute inset-0 flex items-center gap-3 px-5 sm:px-6 pr-20 transition-all duration-500 ${
+              isScrolled
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-4 pointer-events-none'
+            }`}
+          >
+            <img
+              src={pkg.image}
+              alt=""
+              aria-hidden="true"
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg object-cover border border-gold-500/40 shadow-md shrink-0 hidden sm:block"
+            />
+            <div className="min-w-0 flex-1">
+              <span className="text-[9px] uppercase tracking-widest text-gold-400 font-extrabold block mb-0.5">
+                Itinerary · {pkg.category || 'Signature'}
+              </span>
+              <h3 className="font-serif text-sm sm:text-base font-bold text-white truncate leading-tight">
+                {pkg.title}
+              </h3>
+              <span className="text-[10px] text-slate-300 mt-0.5 block">
+                ${basePrice.toLocaleString()} · {pkg.durationDays}D / {pkg.durationDays - 1}N
+              </span>
+            </div>
+          </div>
         </div>
 
-        {/* ─── BODY ─── */}
-        <div className="p-6 sm:p-8">
+        {/* ─── BODY (scrollable, tracks scroll) ─── */}
+        <div
+          ref={bodyRef}
+          onScroll={handleBodyScroll}
+          className="p-6 sm:p-8 sm:overflow-y-auto sm:flex-1"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* LEFT — Timeline */}
             <div className="lg:col-span-2">
@@ -220,19 +282,12 @@ export default function PackageItineraryModal({
         </div>
 
         {/* ─── FOOTER ─── */}
-        <div className="px-6 sm:px-8 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-wrap">
+        <div className="px-6 sm:px-8 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-wrap rounded-b-3xl shrink-0">
           <p className="text-[11px] text-slate-500 dark:text-slate-400">
             <i className="fas fa-shield-alt text-gold-500 mr-1.5" />
             Lanka 360 · SLTDA Licensed TS/2026/0412
           </p>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition inline-flex items-center gap-1.5 uppercase tracking-wider"
-          >
-            <i className="fas fa-times" />
-            Close
-          </button>
+          
         </div>
       </div>
     </div>
