@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import PackageItineraryModal from './components/PackageItineraryModal';
 import PackageBookingModal from './components/PackageBookingModal';
+import TripPlannerModal from './components/TripPlannerModal';
 import WhatsAppButton from './components/WhatsAppButton';
 import Home from './pages/Home';
 import Packages from './pages/Packages';
@@ -39,6 +40,8 @@ export default function App() {
   // Booking modal (with package pre-loaded after Reserve click)
   const [bookingPkg, setBookingPkg] = useState(null);
 
+  const [plannerOpen, setPlannerOpen] = useState(false);
+
   // Expose global triggers for buttons anywhere in the app
   useEffect(() => {
     window.openBookingModal = () => setBookingOpen(true);
@@ -51,6 +54,8 @@ export default function App() {
       setItineraryPkg(null);   
       setBookingPkg(pkg);      
     };
+
+    window.openTripPlanner = () => setPlannerOpen(true);
 
     return () => {
       delete window.openBookingModal;
@@ -100,6 +105,11 @@ export default function App() {
       <BookingModal
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
+      />
+
+      <TripPlannerModal 
+        isOpen={plannerOpen} 
+        onClose={() => setPlannerOpen(false)} 
       />
     </>
   );

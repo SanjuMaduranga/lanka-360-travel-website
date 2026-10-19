@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const heroSlides = [
   {
     image:
-      'https://images.unsplash.com/photo-1519566335946-e6f65f0f4fdf?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
+      'https://images.unsplash.com/photo-1519566335946-e6f65f0f4f4df?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     title: 'Discover The Pearl of',
     highlight: 'The Indian Ocean',
   },
@@ -24,7 +23,6 @@ const heroSlides = [
 
 export default function Hero() {
   const [current, setCurrent] = useState(0);
-  const navigate = useNavigate();
 
   // Auto-advance slideshow
   useEffect(() => {
@@ -34,17 +32,11 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleFilter = (e) => {
-    e.preventDefault();
-    // Navigate to /packages with filter query params
-    const duration = e.target.duration.value;
-    const category = e.target.category.value;
-    const budget = e.target.budget.value;
-    const params = new URLSearchParams();
-    if (duration !== 'all') params.set('duration', duration);
-    if (category !== 'all') params.set('category', category);
-    if (budget !== 'all') params.set('budget', budget);
-    navigate(`/packages?${params.toString()}`);
+  const openPlanner = () => {
+    // Calls the global function exposed in App.jsx
+    if (window.openTripPlanner) {
+      window.openTripPlanner();
+    }
   };
 
   return (
@@ -88,78 +80,23 @@ export default function Hero() {
           luxury private chauffeurs.
         </p>
 
-        {/* Filter Bar */}
-        <div className="max-w-5xl mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-4 sm:p-6 rounded-2xl shadow-2xl text-slate-800 dark:text-slate-100 border border-gold-500/30">
-          <form
-            onSubmit={handleFilter}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        {/* Minimalist Planner Trigger */}
+        <div className="max-w-2xl mx-auto bg-white/10 backdrop-blur-lg p-2 sm:p-3 rounded-2xl border border-white/20 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-3 px-3 py-1 text-left w-full sm:w-auto">
+            <div className="w-10 h-10 rounded-full bg-gold-500/20 flex items-center justify-center text-gold-400 shrink-0">
+              <i className="fas fa-magic text-lg" />
+            </div>
+            <div>
+              <div className="text-sm font-bold text-white">Plan Your Dream Trip</div>
+              <div className="text-[11px] text-slate-300">Estimate budget, duration & style</div>
+            </div>
+          </div>
+          <button
+            onClick={openPlanner}
+            className="w-full sm:w-auto bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold py-3 px-6 rounded-xl shadow-lg transition-all text-sm whitespace-nowrap"
           >
-            {/* Duration */}
-            <div className="text-left">
-              <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
-                <i className="fas fa-clock text-gold-500 mr-1" />
-                Duration
-              </label>
-              <select
-                name="duration"
-                className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 text-sm font-medium focus:ring-2 focus:ring-gold-500 outline-none"
-              >
-                <option value="all">All Durations</option>
-                <option value="1-5">1 – 5 Days</option>
-                <option value="6-9">6 – 9 Days</option>
-                <option value="10+">10+ Days</option>
-              </select>
-            </div>
-
-            {/* Category */}
-            <div className="text-left">
-              <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
-                <i className="fas fa-compass text-gold-500 mr-1" />
-                Category
-              </label>
-              <select
-                name="category"
-                className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 text-sm font-medium focus:ring-2 focus:ring-gold-500 outline-none"
-              >
-                <option value="all">All Categories</option>
-                <option value="Culture">Cultural Heritage</option>
-                <option value="Wildlife">Wildlife & Safari</option>
-                <option value="Beach">Beach & Coastal</option>
-                <option value="Honeymoon">Luxury Honeymoon</option>
-                <option value="Adventure">Hill Country Adventure</option>
-                <option value="Luxury">Luxury Premium</option>
-                <option value="Wellness">Ayurveda & Wellness</option>
-              </select>
-            </div>
-
-            {/* Budget */}
-            <div className="text-left">
-              <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
-                <i className="fas fa-wallet text-gold-500 mr-1" />
-                Budget Level
-              </label>
-              <select
-                name="budget"
-                className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 text-sm font-medium focus:ring-2 focus:ring-gold-500 outline-none"
-              >
-                <option value="all">Any Budget</option>
-                <option value="standard">Standard Comfort</option>
-                <option value="luxury">Luxury 4-5 Star</option>
-                <option value="premium">Ultra Premium</option>
-              </select>
-            </div>
-
-            {/* Search Button */}
-            <div className="flex items-end">
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold py-2.5 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2"
-              >
-                <i className="fas fa-search" />
-                <span>Find Packages</span>
-              </button>
-            </div>
-          </form>
+            Start Planning <i className="fas fa-arrow-right ml-1 text-xs" />
+          </button>
         </div>
       </div>
 
