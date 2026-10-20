@@ -25,20 +25,19 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
+          
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-3 mb-4 group">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-gold-600 to-amber-300 flex items-center justify-center text-ocean-900 font-bold text-xl shadow-lg group-hover:scale-105 transition-transform">
-                <i className="fas fa-palmtree" />
-              </div>
-              <div>
-                <span className="font-serif text-2xl font-bold tracking-tight text-white group-hover:text-gold-500 transition-colors">
-                  LANKA<span className="text-gold-500">360</span>
-                </span>
-                <p className="text-[10px] tracking-widest uppercase text-slate-400 -mt-1 font-semibold">
-                  TRAVELS AND TOURS
-                </p>
-              </div>
+            <Link to="/" className="items-center mb-4 group inline-block">
+              {/* 
+                Since the footer is always dark (bg-ocean-900), we use the dark (white) logo.
+                If you ever change the footer to light mode, swap the classes to the light/dark logic.
+              */}
+              <img
+                src="/logo-dark.png"
+                alt="Lanka 360 Travels and Tours"
+                className="h-8 sm:h-10 w-auto object-contain group-hover:scale-105 transition-transform"
+              />
             </Link>
             <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6 max-w-sm">
               Explore Sri Lanka with unforgettable tour packages, affordable travel services, 
@@ -140,8 +139,8 @@ export default function Footer() {
               <li className="flex items-center space-x-2.5">
                 <i className="fas fa-envelope text-gold-500" />
                 <a
-                  href="mailto:info@lanka360.com"
-                  className="hover:text-gold-400 transition"
+                  href="mailto:lanka360sachith@gmail.com"
+                  className="hover:text-gold-400 transition break-all"
                 >
                   lanka360sachith@gmail.com
                 </a>
@@ -158,8 +157,10 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-4">
-          <p>&copy; {new Date().getFullYear()} Lanka 360 Travels & Tours. All Rights Reserved.</p>
-          <div className="flex space-x-6 text-slate-400">
+          <p className="text-center sm:text-left">
+            &copy; {new Date().getFullYear()} Lanka 360 Travels & Tours. All Rights Reserved.
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-slate-400">
             <Link to="/privacy" className="hover:text-gold-400 transition">
               Privacy Policy
             </Link>

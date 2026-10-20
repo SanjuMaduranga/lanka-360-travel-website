@@ -78,7 +78,7 @@ export default function Packages() {
                     <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase block font-semibold">
                       Starting From
                     </span>
-                    <span className="font-serif text-xl font-extrabold text-slate-900 dark:text-slate-100">
+                    <span className="font-poppins text-xl font-bold text-slate-800 dark:text-slate-100">
                       <span className="text-[#B8860B]">$</span>
                       {item.priceUSD.toLocaleString()}
                     </span>

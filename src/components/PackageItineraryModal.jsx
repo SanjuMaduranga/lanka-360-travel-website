@@ -227,7 +227,7 @@ export default function PackageItineraryModal({
                   Per guest · all-inclusive
                 </span>
 
-                {/* Inclusions */}
+                {/* Inclusions
                 <div className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 pt-4 mt-4 border-t border-gold-500/20">
                   <div className="flex items-start gap-2">
                     <i className="fas fa-check text-emerald-500 mt-0.5 shrink-0" />
@@ -245,7 +245,7 @@ export default function PackageItineraryModal({
                     <i className="fas fa-check text-emerald-500 mt-0.5 shrink-0" />
                     <span>Flexible Cancellation Policy</span>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Highlights */}
                 <div className="pt-4 mt-4 border-t border-gold-500/20">
