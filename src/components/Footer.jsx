@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
+import TripAdvisorIcon from './TripAdvisorIcon';
 
 const quickLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Tour Packages', href: '/packages' },
-  { name: 'Our Services', href: '/services' },
-  { name: 'Tailor-Made Trip', href: '/#planner' },
+  { name: 'Tour Packages', href: '/#packages' },
+  { name: 'Our Services', href: '/#services' },
   { name: 'Top Destinations', href: '/#destinations' },
 ];
 
@@ -48,28 +48,28 @@ export default function Footer() {
             </p>
             <div className="flex items-center space-x-3 text-sm">
               <a
-                href="#"
+                href="https://web.facebook.com/DaysOfSachith"
                 aria-label="Facebook"
                 className="w-9 h-9 rounded-full bg-slate-800/80 border border-slate-700 hover:border-gold-500 hover:text-gold-400 text-slate-300 flex items-center justify-center transition"
               >
                 <i className="fab fa-facebook-f" />
               </a>
               <a
-                href="#"
+                href="https://instagram.com"
                 aria-label="Instagram"
                 className="w-9 h-9 rounded-full bg-slate-800/80 border border-slate-700 hover:border-gold-500 hover:text-gold-400 text-slate-300 flex items-center justify-center transition"
               >
                 <i className="fab fa-instagram" />
               </a>
               <a
-                href="#"
+                href="https://www.tripadvisor.com/Attraction_Review-g1407334-d34754084-Reviews-Private_Sri_Lanka_Round_Tour_with_English_Speaking_Driver_Lanka_360_Travel_Tour.html"
                 aria-label="TripAdvisor"
                 className="w-9 h-9 rounded-full bg-slate-800/80 border border-slate-700 hover:border-gold-500 hover:text-gold-400 text-slate-300 flex items-center justify-center transition"
               >
-                <i className="fab fa-tripadvisor" />
+                <TripAdvisorIcon className="w-5 h-5 text-emerald-500" />
               </a>
               <a
-                href="https://wa.me/94771234567"
+                href="https://wa.me/94725879636"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
@@ -109,7 +109,7 @@ export default function Footer() {
               {serviceLinks.map((s) => (
                 <li key={s}>
                   <Link
-                    to="/services"
+                    // to="/services"
                     className="hover:text-gold-400 transition flex items-center"
                   >
                     <i className="fas fa-check text-[9px] text-gold-500 mr-2" />
@@ -161,13 +161,19 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Lanka 360 Travels & Tours. All Rights Reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-slate-400">
-            <Link to="/privacy" className="hover:text-gold-400 transition">
+            <Link 
+              // to="/privacy" 
+              className="hover:text-gold-400 transition">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="hover:text-gold-400 transition">
+            <Link 
+              // to="/terms" 
+              className="hover:text-gold-400 transition">
               Terms & Conditions
             </Link>
-            <Link to="/sitemap" className="hover:text-gold-400 transition">
+            <Link 
+              to="/sitemap" 
+              className="hover:text-gold-400 transition">
               Sitemap
             </Link>
           </div>

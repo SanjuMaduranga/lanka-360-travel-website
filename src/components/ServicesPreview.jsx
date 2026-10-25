@@ -60,7 +60,7 @@ export default function ServicesPreview() {
                 </p>
               </div>
               <Link
-                to="/services"
+                // to="/services"
                 className="inline-flex items-center gap-2 text-xs font-bold text-gold-500 hover:text-gold-400 transition"
               >
                 <span>Learn Details</span>
@@ -73,7 +73,7 @@ export default function ServicesPreview() {
         {/* View All */}
         <div className="mt-12 text-center">
           <Link
-            to="/services"
+            // to="/services"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all"
           >
             <span>View All Travel Services</span>

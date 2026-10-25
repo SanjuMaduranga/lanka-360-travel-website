@@ -4,6 +4,8 @@ import Packages from '../components/Packages';
 import Destinations from '../components/Destinations';
 import ServicesPreview from '../components/ServicesPreview';
 import Reviews from '../components/Reviews';
+import Gallery from '../components/Gallery';
+import ContactSection from '../components/ContactSection';
 
 export default function Home() {
   return (
@@ -18,7 +20,11 @@ export default function Home() {
         <Destinations />
         <Packages />
         <ServicesPreview />
+        <Gallery />
         <Reviews />
+        <div id="contact">
+          <ContactSection />
+        </div>  
       </main>
     </>
   );

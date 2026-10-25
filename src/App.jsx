@@ -8,6 +8,7 @@ import PackageItineraryModal from './components/PackageItineraryModal';
 import PackageBookingModal from './components/PackageBookingModal';
 import TripPlannerModal from './components/TripPlannerModal';
 import WhatsAppButton from './components/WhatsAppButton';
+
 import Home from './pages/Home';
 import Packages from './pages/Packages';
 import Services from './pages/Services';
@@ -16,6 +17,7 @@ import About from './pages/About';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import NotFound from './pages/NotFound';
+import GalleryPage from './pages/GalleryPage';
 
 function ScrollToHash() {
   const { hash, pathname } = useLocation();
@@ -78,6 +80,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

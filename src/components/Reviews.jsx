@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import TripAdvisorIcon from './TripAdvisorIcon';
 
 const reviewsList = [
   {
@@ -44,8 +45,8 @@ const reviewsList = [
 
 const TABS = [
   { id: 'all', label: 'All Reviews', icon: null },
-  { id: 'google', label: 'Google Reviews', icon: 'fab fa-google text-blue-500' },
-  { id: 'tripadvisor', label: 'TripAdvisor', icon: 'fab fa-tripadvisor text-emerald-500' },
+  { id: 'google', label: 'Google Reviews', iconType: 'google' },
+  { id: 'tripadvisor', label: 'TripAdvisor', iconType: 'tripadvisor' },
 ];
 
 export default function Reviews() {
@@ -108,7 +109,7 @@ export default function Reviews() {
 
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center shadow border border-emerald-200 dark:border-emerald-800">
-                <i className="fab fa-tripadvisor text-emerald-500 text-2xl" />
+              <TripAdvisorIcon className="w-6 h-6 text-emerald-500" />
               </div>
               <div className="text-left">
                 <div className="flex items-center space-x-1 text-emerald-500 text-xs">
@@ -133,12 +134,13 @@ export default function Reviews() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-5 py-2 rounded-full text-xs font-semibold transition flex items-center gap-2 ${
-                  activeTab === tab.id
+                 activeTab === tab.id
                     ? 'bg-gold-500 text-ocean-900 font-bold shadow'
                     : 'bg-slate-200 dark:bg-slate-800 hover:bg-gold-500/20 text-slate-700 dark:text-slate-300'
                 }`}
               >
-                {tab.icon && <i className={tab.icon} />}
+                {tab.iconType === 'google' && <i className="fab fa-google text-blue-500 text-sm" />}
+                {tab.iconType === 'tripadvisor' && <TripAdvisorIcon className="w-4 h-4 text-emerald-500" />}
                 {tab.label}
               </button>
             ))}
@@ -171,7 +173,7 @@ export default function Reviews() {
                         </>
                       ) : (
                         <>
-                          <i className="fab fa-tripadvisor text-emerald-500 mr-1.5" />{' '}
+                          <TripAdvisorIcon className="w-3 h-3 text-emerald-500 mr-1.5" />{' '}
                           TripAdvisor
                         </>
                       )}
@@ -212,26 +214,31 @@ export default function Reviews() {
           })}
         </div>
 
-        {/* Review Links */}
-        <div className="mt-12 text-center flex flex-wrap justify-center items-center gap-4">
+        {/* ─── REVIEW LINKS ─── */}
+        <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
+          
+          {/* Google Review Button */}
           <a
-            href="https://www.google.com"
+            href="https://search.google.com/local/writereview?placeid=YOUR_GOOGLE_PLACE_ID"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-gold-500 text-slate-700 dark:text-slate-200 px-5 py-2.5 rounded-full text-xs font-semibold shadow-md transition"
+            className="inline-flex items-center space-x-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-blue-500 text-slate-700 dark:text-slate-200 px-6 py-3 rounded-full text-sm font-semibold shadow-md transition"
           >
-            <i className="fab fa-google text-blue-500" />
-            <span>Review Us On Google</span>
+            <i className="fab fa-google text-blue-500 text-lg" />
+            <span>Write a Review on Google</span>
           </a>
+
+          {/* Custom TripAdvisor Button */}
           <a
-            href="https://www.tripadvisor.com"
+            href="https://www.tripadvisor.com/UserReviewEdit-d34754084"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 text-slate-700 dark:text-slate-200 px-5 py-2.5 rounded-full text-xs font-semibold shadow-md transition"
+            className="inline-flex items-center space-x-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 text-slate-700 dark:text-slate-200 px-6 py-3 rounded-full text-sm font-semibold shadow-md transition"
           >
-            <i className="fab fa-tripadvisor text-emerald-500" />
+            <TripAdvisorIcon className="w-3 h-3 text-emerald-500 mr-1.5" />
             <span>Write a Review on TripAdvisor</span>
           </a>
+
         </div>
       </div>
     </section>

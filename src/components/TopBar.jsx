@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import TripAdvisorIcon from './TripAdvisorIcon';
 
 export default function TopBar() {
 //   const [currency, setCurrency] = useState('USD');
@@ -13,12 +14,12 @@ export default function TopBar() {
       <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
         {/* Left — contact info */}
         <div className="flex items-center space-x-6">
-          <a href="tel:+94771234567" className="hover:text-gold-400 transition">
+          <a href="tel:+94725879636" className="hover:text-gold-400 transition">
             <i className="fas fa-phone-alt text-gold-500 mr-2" />
             +94 72 587 9636
           </a>
           <a
-            href="mailto:info@lanka360.com"
+            href="mailto:lanka360sachith@gmail.com"
             className="hidden sm:inline-block hover:text-gold-400 transition"
           >
             <i className="fas fa-envelope text-gold-500 mr-2" />
@@ -53,16 +54,16 @@ export default function TopBar() {
 
           {/* Social Icons */}
           <div className="hidden sm:flex space-x-3 text-sm">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400" aria-label="Facebook">
+            <a href="https://web.facebook.com/DaysOfSachith" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400" aria-label="Facebook">
               <i className="fab fa-facebook-f" />
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400" aria-label="Instagram">
               <i className="fab fa-instagram" />
             </a>
-            <a href="https://tripadvisor.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400" aria-label="TripAdvisor">
-              <i className="fab fa-tripadvisor" />
+            <a href="https://www.tripadvisor.com/Attraction_Review-g1407334-d34754084-Reviews-Private_Sri_Lanka_Round_Tour_with_English_Speaking_Driver_Lanka_360_Travel_Tour.html" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400" aria-label="TripAdvisor">
+              <TripAdvisorIcon className="w-[20px] h-[20px]" />
             </a>
-            <a href="https://wa.me/94771234567" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400" aria-label="WhatsApp">
+            <a href="https://wa.me/94725879636" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400" aria-label="WhatsApp">
               <i className="fab fa-whatsapp" />
             </a>
           </div>

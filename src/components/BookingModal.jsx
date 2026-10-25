@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { packagesList } from '../data/siteData';
 
-const RECEIVING_EMAIL = 'sanju990421@gmail.com';
-const WHATSAPP_NUMBER = '94762125884';
+const RECEIVING_EMAIL = 'lanka360sachith@gmail.com';
+const WHATSAPP_NUMBER = '94725879636';
 
 const emptyForm = {
   name: '',

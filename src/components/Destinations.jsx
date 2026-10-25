@@ -6,7 +6,7 @@ const destinationsList = [
     name: 'Sigiriya Rock Citadel',
     tagline: 'Ancient Sky Palace & Water Gardens',
     badge: 'UNESCO Heritage',
-    img: 'https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1667153564448-db44a6db53e4?q=80&w=1527&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     location: 'Central Cultural Triangle',
     rating: '4.9',
     tours: '8 Packages',
@@ -16,7 +16,7 @@ const destinationsList = [
     name: 'Ella Mountain Pass',
     tagline: 'Nine Arch Bridge & Misty Tea Hills',
     badge: 'Misty Highlands',
-    img: 'https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1656314943432-b00ec3f6dbce?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     location: 'Badulla District',
     rating: '5.0',
     tours: '12 Packages',
@@ -26,7 +26,7 @@ const destinationsList = [
     name: 'Galle Dutch Fort',
     tagline: 'Historic Ramparts & Oceanside Cobblestones',
     badge: 'Colonial Heritage',
-    img: 'https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1592905169881-eff95fe441ed?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     location: 'Southern Oceanfront',
     rating: '4.8',
     tours: '6 Packages',
@@ -36,7 +36,7 @@ const destinationsList = [
     name: 'Yala National Park',
     tagline: "World's Highest Density Leopard Safari",
     badge: 'Wild Safari',
-    img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+    img: 'https://images.unsplash.com/photo-1558791985-4241e4011215?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     location: 'South-East Sanctuary',
     rating: '4.9',
     tours: '9 Packages',
@@ -74,7 +74,7 @@ export default function Destinations() {
         </div>
         <div>
           <Link
-            to="/packages"
+            // to="/packages"
             className="inline-flex items-center gap-3 bg-gradient-to-r from-gold-500 via-amber-500 to-gold-600 hover:from-gold-600 hover:to-amber-600 text-ocean-900 font-extrabold px-8 py-4 rounded-full shadow-2xl hover:shadow-gold-500/25 transition-all duration-300 transform hover:-translate-y-1 text-sm"
           >
             <span>Explore All Locations</span>
@@ -88,7 +88,7 @@ export default function Destinations() {
         {destinationsList.map((d) => (
           <Link
             key={d.id}
-            to="/packages"
+            // to="/packages"
             className="group relative h-[480px] rounded-[32px] overflow-hidden cursor-pointer bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl transition-all duration-700 ease-out transform hover:-translate-y-2.5 hover:shadow-gold-500/20 block"
           >
             {/* Image */}

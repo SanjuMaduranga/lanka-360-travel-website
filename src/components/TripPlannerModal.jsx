@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 
-// ─────────────────────────────────────────────────────────────
-// ✏️ CHANGE THESE TO YOUR REAL DETAILS
-// ─────────────────────────────────────────────────────────────
-const RECEIVING_EMAIL = 'YOUR_EMAIL_HERE@lanka360.com';
-const WHATSAPP_NUMBER = '94771234567';
+const RECEIVING_EMAIL = 'lanka360sachith@gmail.com';
+const WHATSAPP_NUMBER = '94725879636';
 
 const emptyForm = {
   name: '',
@@ -45,9 +42,26 @@ const ACTIVITIES = [
   { id: 'shopping', label: 'Shopping' },
 ];
 
+// Each destination exposes only activities that are relevant to that area.
+const DESTINATIONS = [
+  { id: 'sigiriya', label: 'Sigiriya & Dambulla', region: 'Cultural Triangle', description: 'Ancient landmarks, rock fortress and cave temples', activities: ['unesco', 'elephants', 'balloon', 'hiking', 'village', 'photo'] },
+  { id: 'kandy', label: 'Kandy', region: 'Hill Country', description: 'Sacred temples, culture and local cuisine', activities: ['unesco', 'cooking', 'village', 'shopping', 'photo'] },
+  { id: 'ella', label: 'Ella', region: 'Hill Country', description: 'Mountain views, tea estates and scenic train rides', activities: ['tea', 'train', 'hiking', 'waterfall', 'photo', 'adventure'] },
+  { id: 'nuwara-eliya', label: 'Nuwara Eliya', region: 'Hill Country', description: 'Cool climate, tea plantations and waterfalls', activities: ['tea', 'train', 'hiking', 'waterfall', 'photo'] },
+  { id: 'yala', label: 'Yala National Park', region: 'Southern Sri Lanka', description: 'Wildlife safaris and opportunities to spot leopards', activities: ['elephants', 'leopard', 'birds', 'photo', 'adventure'] },
+  { id: 'galle', label: 'Galle & South Coast', region: 'Southern Coast', description: 'Historic Galle Fort, beaches and coastal towns', activities: ['beach', 'surf', 'snorkel', 'diving', 'turtles', 'whales', 'shopping', 'photo', 'boutique'] },
+  { id: 'mirissa', label: 'Mirissa', region: 'Southern Coast', description: 'Beach time, ocean excursions and whale watching', activities: ['whales', 'beach', 'snorkel', 'surf', 'diving', 'photo'] },
+  { id: 'bentota', label: 'Bentota', region: 'Western Coast', description: 'Relaxing beaches and water-based activities', activities: ['beach', 'snorkel', 'diving', 'turtles', 'ayurveda', 'adventure'] },
+  { id: 'trincomalee', label: 'Trincomalee', region: 'Eastern Coast', description: 'Clear-water beaches, marine life and diving', activities: ['beach', 'snorkel', 'diving', 'whales', 'birds', 'photo'] },
+  { id: 'colombo', label: 'Colombo', region: 'Western Sri Lanka', description: 'City experiences, restaurants and shopping', activities: ['shopping', 'cooking', 'photo', 'boutique', 'casino', 'ayurveda'] },
+  { id: 'anuradhapura', label: 'Anuradhapura', region: 'Cultural Triangle', description: 'Ancient cities, stupas and sacred heritage sites', activities: ['unesco', 'village', 'photo', 'shopping'] },
+  { id: 'udawalawe', label: 'Udawalawe', region: 'Southern Sri Lanka', description: 'Wildlife experiences and elephant spotting', activities: ['elephants', 'birds', 'photo', 'village'] },
+];
+
 export default function TripPlannerModal({ isOpen, onClose }) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState(emptyForm);
+  const [selectedDestinations, setSelectedDestinations] = useState([]);
   const [activities, setActivities] = useState([]);
   const [status, setStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -76,6 +90,18 @@ export default function TripPlannerModal({ isOpen, onClose }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const toggleDestination = (id) => {
+    const next = selectedDestinations.includes(id)
+      ? selectedDestinations.filter((destinationId) => destinationId !== id)
+      : [...selectedDestinations, id];
+    setSelectedDestinations(next);
+    const allowedActivityIds = new Set(
+      DESTINATIONS.filter((destination) => next.includes(destination.id)).flatMap((destination) => destination.activities)
+    );
+    // Remove activities that no longer match any selected destination.
+    setActivities((current) => current.filter((activityId) => allowedActivityIds.has(activityId)));
+  };
+
   const toggleActivity = (id) => {
     setActivities((prev) =>
       prev.includes(id) ? prev.filter((a) => a !== id) : [...prev, id]
@@ -87,6 +113,15 @@ export default function TripPlannerModal({ isOpen, onClose }) {
     setStep(2);
   };
 
+  const handleNextToActivities = () => {
+    if (selectedDestinations.length === 0) return;
+    setStep(3);
+  };
+
+  const visibleActivities = ACTIVITIES.filter((activity) =>
+    DESTINATIONS.some((destination) => selectedDestinations.includes(destination.id) && destination.activities.includes(activity.id))
+  );
+
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
     setSubmitting(true);
@@ -95,6 +130,10 @@ export default function TripPlannerModal({ isOpen, onClose }) {
     const selectedActivities = ACTIVITIES
       .filter((a) => activities.includes(a.id))
       .map((a) => a.label)
+      .join(', ');
+    const selectedDestinationLabels = DESTINATIONS
+      .filter((destination) => selectedDestinations.includes(destination.id))
+      .map((destination) => destination.label)
       .join(', ');
 
     const whatsappText = [
@@ -108,6 +147,9 @@ export default function TripPlannerModal({ isOpen, onClose }) {
       `*Dates:* ${form.startDate} to ${form.endDate}`,
       `*Adults:* ${form.adults} | *Children:* ${form.children}`,
       `*Budget (USD):* ${form.budget || 'Not specified'}`,
+      '',
+      '*── Destinations ──*',
+      selectedDestinationLabels || 'None selected',
       '',
       '*── Activities & Focus ──*',
       selectedActivities || 'None selected',
@@ -139,6 +181,7 @@ export default function TripPlannerModal({ isOpen, onClose }) {
           Adults: form.adults,
           Children: form.children,
           'Approx Budget (USD)': form.budget || 'Not specified',
+          Destinations: selectedDestinationLabels || 'None selected',
           Activities: selectedActivities || 'None selected',
           Notes: form.notes || 'None',
         }),
@@ -159,6 +202,7 @@ export default function TripPlannerModal({ isOpen, onClose }) {
     setTimeout(() => {
       setStatus(null);
       setForm(emptyForm);
+      setSelectedDestinations([]);
       setActivities([]);
       setStep(1);
       onClose();
@@ -211,6 +255,7 @@ export default function TripPlannerModal({ isOpen, onClose }) {
           <div className="flex items-center gap-2 mt-4">
             <div className={`h-1.5 flex-1 rounded-full transition-colors ${step >= 1 ? 'bg-gold-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
             <div className={`h-1.5 flex-1 rounded-full transition-colors ${step >= 2 ? 'bg-gold-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
+            <div className={`h-1.5 flex-1 rounded-full transition-colors ${step >= 3 ? 'bg-gold-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
           </div>
         </div>
 
@@ -291,39 +336,88 @@ export default function TripPlannerModal({ isOpen, onClose }) {
                 </div>
               </div>
             </form>
-          ) : (
-            /* ─── STEP 2 ─── */
+          ) : step === 2 ? (
+            /* ─── STEP 2: DESTINATIONS ─── */
             <div className="space-y-4 pb-6">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-ocean-900 text-white flex items-center justify-center text-xs font-bold">2</span>
-                <span className="text-sm font-bold text-ocean-900 dark:text-slate-100 uppercase tracking-wider">Activities & Focus</span>
+                <span className="text-sm font-bold text-ocean-900 dark:text-slate-100 uppercase tracking-wider">Select Destinations</span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
-                Tick experiences you’d like included. We optimise routing & pacing around them.
+                Choose one or more places you would like to visit. Your activity options will adapt to your selections.
               </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-                {ACTIVITIES.map((act) => {
-                  const isActive = activities.includes(act.id);
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {DESTINATIONS.map((destination) => {
+                  const isActive = selectedDestinations.includes(destination.id);
                   return (
                     <button
-                      key={act.id}
+                      key={destination.id}
                       type="button"
-                      onClick={() => toggleActivity(act.id)}
-                      className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all ${
-                        isActive
-                          ? 'bg-gold-500/10 border-gold-500 text-gold-700 dark:text-gold-400 font-semibold shadow-sm'
-                          : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-gold-300'
+                      onClick={() => toggleDestination(destination.id)}
+                      aria-pressed={isActive}
+                      className={`flex items-start gap-3 p-4 rounded-xl border text-left transition-all ${isActive
+                        ? 'bg-gold-500/10 border-gold-500 shadow-sm'
+                        : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-gold-300'
                       }`}
                     >
-                      <div className={`w-5 h-5 rounded flex items-center justify-center shrink-0 border transition-colors ${isActive ? 'bg-gold-500 border-gold-500 text-white' : 'border-slate-300 dark:border-slate-600'}`}>
+                      <span className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center shrink-0 border ${isActive ? 'bg-gold-500 border-gold-500 text-white' : 'border-slate-300 dark:border-slate-600'}`}>
                         {isActive && <i className="fas fa-check text-[10px]" />}
-                      </div>
-                      <span className="text-xs leading-tight">{act.label}</span>
+                      </span>
+                      <span>
+                        <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">{destination.label}</span>
+                        <span className="block text-[10px] uppercase tracking-wider text-gold-700 dark:text-gold-400 mt-0.5">{destination.region}</span>
+                        <span className="block text-xs leading-relaxed text-slate-500 dark:text-slate-400 mt-1">{destination.description}</span>
+                      </span>
                     </button>
                   );
                 })}
               </div>
+              {selectedDestinations.length > 0 && (
+                <p className="text-xs text-slate-500 dark:text-slate-400">{selectedDestinations.length} destination{selectedDestinations.length === 1 ? '' : 's'} selected</p>
+              )}
+            </div>
+          ) : (
+            /* ─── STEP 3: DESTINATION-BASED ACTIVITIES ─── */
+            <div className="space-y-4 pb-6">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-6 rounded-full bg-ocean-900 text-white flex items-center justify-center text-xs font-bold">3</span>
+                <span className="text-sm font-bold text-ocean-900 dark:text-slate-100 uppercase tracking-wider">Activities & Focus</span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+                These activities match your selected destinations. Select all the experiences you are interested in.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {DESTINATIONS.filter((destination) => selectedDestinations.includes(destination.id)).map((destination) => (
+                  <span key={destination.id} className="px-2.5 py-1 rounded-full text-[11px] bg-gold-500/10 text-gold-700 dark:text-gold-400 border border-gold-500/20">{destination.label}</span>
+                ))}
+              </div>
+              {visibleActivities.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                  {visibleActivities.map((act) => {
+                    const isActive = activities.includes(act.id);
+                    return (
+                      <button
+                        key={act.id}
+                        type="button"
+                        onClick={() => toggleActivity(act.id)}
+                        aria-pressed={isActive}
+                        className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all ${
+                          isActive
+                            ? 'bg-gold-500/10 border-gold-500 text-gold-700 dark:text-gold-400 font-semibold shadow-sm'
+                            : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-gold-300'
+                        }`}
+                      >
+                        <span className={`w-5 h-5 rounded flex items-center justify-center shrink-0 border transition-colors ${isActive ? 'bg-gold-500 border-gold-500 text-white' : 'border-slate-300 dark:border-slate-600'}`}>
+                          {isActive && <i className="fas fa-check text-[10px]" />}
+                        </span>
+                        <span className="text-xs leading-tight">{act.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="text-sm text-slate-500">No activities are configured for these destinations yet.</p>
+              )}
             </div>
           )}
         </div>
@@ -337,16 +431,35 @@ export default function TripPlannerModal({ isOpen, onClose }) {
                 form="planner-step-1"
                 className="w-full bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-widest"
               >
-                <span>Continue to Activities</span>
+                <span>Continue to Destinations</span>
                 <i className="fas fa-arrow-right" />
               </button>
-            ) : (
+            ) : step === 2 ? (
               <div className="flex gap-3">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
                   className="px-5 sm:px-6 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl transition-all"
                   aria-label="Go back"
+                >
+                  <i className="fas fa-arrow-left" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextToActivities}
+                  disabled={selectedDestinations.length === 0}
+                  className="flex-1 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Continue to Activities <i className="fas fa-arrow-right" />
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
+                  className="px-5 sm:px-6 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl transition-all"
+                  aria-label="Back to destinations"
                 >
                   <i className="fas fa-arrow-left" />
                 </button>

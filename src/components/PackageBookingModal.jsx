@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
-const RECEIVING_EMAIL = 'YOUR_EMAIL_HERE@lanka360.com';
-const WHATSAPP_NUMBER = '94771234567';
+const RECEIVING_EMAIL = 'lanka360sachith@gmail.com';
+const WHATSAPP_NUMBER = '94725879636';
 
 const emptyForm = {
   name: '',

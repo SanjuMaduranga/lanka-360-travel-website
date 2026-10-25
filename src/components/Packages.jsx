@@ -1,7 +1,8 @@
 import { packagesList } from '../data/siteData';
 
 export default function Packages() {
-  const previewPackages = packagesList.slice(0, 3);
+  // Showing 4 packages just as an example (you can change this back to 3)
+  const previewPackages = packagesList.slice(0, 4);
 
   const openItinerary = (pkg) => {
     if (window.openItineraryModal) {
@@ -28,11 +29,15 @@ export default function Packages() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* 
+          Changed from grid to flexbox with justify-center.
+          This ensures cards are always centered, even if there is only 1 or 2.
+        */}
+        <div className="flex flex-wrap justify-center gap-8">
           {previewPackages.map((item) => (
             <article
               key={item.id}
-              className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden flex flex-col border border-[#D4AF37]/30 dark:border-[#D4AF37]/20 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group"
+              className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] max-w-sm bg-white dark:bg-slate-900 rounded-3xl overflow-hidden flex flex-col border border-[#D4AF37]/30 dark:border-[#D4AF37]/20 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group"
             >
               <div className="relative h-64 overflow-hidden">
                 <img
