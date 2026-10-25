@@ -2,16 +2,16 @@ import { Link } from 'react-router-dom';
 
 // Replace these with your actual image URLs later
 const galleryImages = [
-  { id: 1, src: '/gallery/photo1.jfif', tall: true },
-  { id: 2, src: '/gallery/photo2.jfif' },
-  { id: 3, src: '/gallery/photo3.jfif' },
-  { id: 4, src: '/gallery/photo4.jfif' },
-  { id: 5, src: '/gallery/photo5.jfif', tall: true },
-  { id: 6, src: '/gallery/photo6.jfif' },
-  { id: 7, src: '/gallery/photo7.jfif' },
-  { id: 8, src: '/gallery/photo8.jfif' },
-  { id: 9, src: '/gallery/photo9.jfif' },
-  { id: 10, src: '/gallery/photo10.jfif' },
+  { id: 1, src: '/gallery/photo1.webp', tall: true },
+  { id: 2, src: '/gallery/photo2.webp' },
+  { id: 3, src: '/gallery/photo3.webp' },
+  { id: 4, src: '/gallery/photo4.webp' },
+  { id: 5, src: '/gallery/photo5.webp', tall: true },
+  { id: 6, src: '/gallery/photo6.webp' },
+  { id: 7, src: '/gallery/photo7.webp' },
+  { id: 8, src: '/gallery/photo8.webp' },
+  { id: 9, src: '/gallery/photo9.webp' },
+  { id: 10, src: '/gallery/photo10.webp' },
 ];
 
 export default function Gallery() {
