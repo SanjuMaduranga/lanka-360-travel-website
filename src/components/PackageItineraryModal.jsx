@@ -9,18 +9,14 @@ export default function PackageItineraryModal({
   const [isScrolled, setIsScrolled] = useState(false);
   const bodyRef = useRef(null);
 
-  // Lock scroll + Escape key
   useEffect(() => {
     if (!isOpen) return;
-
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-
     const handleEscape = (e) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleEscape);
-
     return () => {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener('keydown', handleEscape);
@@ -29,8 +25,7 @@ export default function PackageItineraryModal({
 
   if (!isOpen || !pkg) return null;
 
-  // Use base price — no tiers anymore
-  const basePrice = pkg.priceUSD ?? 0;
+  const totalPrice = pkg.priceUSD ?? 0;
 
   const handleBodyScroll = (e) => {
     setIsScrolled(e.currentTarget.scrollTop > 40);
@@ -44,154 +39,71 @@ export default function PackageItineraryModal({
       aria-modal="true"
       aria-labelledby="itineraryModalTitle"
     >
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-slate-950/85 backdrop-blur-md"
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md" aria-hidden="true" />
 
-      {/* Card */}
       <div
         className="relative w-full max-w-5xl my-4 sm:my-8 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-[slideUp_0.3s_ease-out] sm:max-h-[92vh] sm:flex sm:flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ─── CLOSE BUTTON ─── */}
         <button
           type="button"
           onClick={onClose}
           aria-label="Close itinerary"
           className="absolute top-4 right-4 z-30 w-11 h-11 rounded-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-red-500 hover:text-white hover:border-red-500 hover:rotate-90 shadow-lg transition-all duration-300 flex items-center justify-center"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-5 h-5"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
-          <span className="sr-only">Close</span>
         </button>
 
-        {/* ─── SMART STICKY HERO (shrinks on scroll) ─── */}
-        <div
-          className={`relative overflow-hidden rounded-t-3xl shrink-0 transition-all duration-500 ease-out ${
-            isScrolled ? 'h-20 sm:h-24' : 'h-64 sm:h-80'
-          }`}
-        >
-          <img
-            src={pkg.image}
-            alt={pkg.title}
-            className={`w-full h-full object-cover transition-all duration-500 ${
-              isScrolled ? 'opacity-90' : 'opacity-100'
-            }`}
-          />
-          <div
-            className={`absolute inset-0 transition-all duration-500 ${
-              isScrolled
-                ? 'bg-gradient-to-r from-slate-900 via-slate-900/85 to-slate-900/60'
-                : 'bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10'
-            }`}
-          />
+        <div className={`relative overflow-hidden rounded-t-3xl shrink-0 transition-all duration-500 ease-out ${isScrolled ? 'h-20 sm:h-24' : 'h-64 sm:h-80'}`}>
+          <img src={pkg.image} alt={pkg.title} className={`w-full h-full object-cover transition-all duration-500 ${isScrolled ? 'opacity-90' : 'opacity-100'}`} />
+          <div className={`absolute inset-0 transition-all duration-500 ${isScrolled ? 'bg-gradient-to-r from-slate-900 via-slate-900/85 to-slate-900/60' : 'bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10'}`} />
 
-          {/* Top badges — fade out when scrolled */}
-          <div
-            className={`absolute top-4 left-4 flex flex-wrap gap-2 pr-16 transition-all duration-300 ${
-              isScrolled
-                ? 'opacity-0 -translate-y-2 pointer-events-none'
-                : 'opacity-100 translate-y-0'
-            }`}
-          >
+          <div className={`absolute top-4 left-4 flex flex-wrap gap-2 pr-16 transition-all duration-300 ${isScrolled ? 'opacity-0 -translate-y-2 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
             <span className="bg-gold-500 text-ocean-900 text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
-              <i className="fas fa-crown mr-1" />
-              {pkg.category || 'Signature'}
+              <i className="fas fa-crown mr-1" /> {pkg.category || 'Signature'}
             </span>
             <span className="bg-white/95 backdrop-blur-md text-slate-800 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border border-white/40 shadow-md">
-              <i className="fas fa-clock text-gold-600 mr-1" />
-              {pkg.durationDays}D / {pkg.durationDays - 1}N
+              <i className="fas fa-clock text-gold-600 mr-1" /> {pkg.durationDays}D / {pkg.durationDays - 1}N
             </span>
             <span className="bg-white/95 backdrop-blur-md text-slate-800 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border border-white/40 shadow-md">
-              <i className="fas fa-star text-amber-500 mr-1" />
-              {pkg.rating} ({pkg.reviewsCount})
+              <i className="fas fa-star text-amber-500 mr-1" /> {pkg.rating} ({pkg.reviewsCount})
             </span>
           </div>
 
-          {/* Full title block — fades out when scrolled */}
-          <div
-            className={`absolute bottom-0 left-0 right-0 p-6 sm:p-8 transition-all duration-500 ${
-              isScrolled
-                ? 'opacity-0 translate-y-4 pointer-events-none'
-                : 'opacity-100 translate-y-0'
-            }`}
-          >
+          <div className={`absolute bottom-0 left-0 right-0 p-6 sm:p-8 transition-all duration-500 ${isScrolled ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
             <span className="text-gold-300 text-[10px] sm:text-xs font-bold uppercase tracking-widest block mb-1.5">
-              <i className="fas fa-route mr-1.5" />
-              Day-by-Day Bespoke Itinerary
+              <i className="fas fa-route mr-1.5" /> Day-by-Day Bespoke Itinerary
             </span>
-            <h2
-              id="itineraryModalTitle"
-              className="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight drop-shadow-md"
-            >
+            <h2 id="itineraryModalTitle" className="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight drop-shadow-md">
               {pkg.title}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-200 mt-2 italic drop-shadow">
-              {pkg.tagline}
-            </p>
+            <p className="text-xs sm:text-sm text-slate-200 mt-2 italic drop-shadow">{pkg.tagline}</p>
           </div>
 
-          {/* Compact bar — fades in when scrolled */}
-          <div
-            className={`absolute inset-0 flex items-center gap-3 px-5 sm:px-6 pr-20 transition-all duration-500 ${
-              isScrolled
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-4 pointer-events-none'
-            }`}
-          >
-            <img
-              src={pkg.image}
-              alt=""
-              aria-hidden="true"
-              className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg object-cover border border-gold-500/40 shadow-md shrink-0 hidden sm:block"
-            />
+          <div className={`absolute inset-0 flex items-center gap-3 px-5 sm:px-6 pr-20 transition-all duration-500 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+            <img src={pkg.image} alt="" aria-hidden="true" className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg object-cover border border-gold-500/40 shadow-md shrink-0 hidden sm:block" />
             <div className="min-w-0 flex-1">
-              <span className="text-[9px] uppercase tracking-widest text-gold-400 font-extrabold block mb-0.5">
-                Itinerary · {pkg.category || 'Signature'}
-              </span>
-              <h3 className="font-serif text-sm sm:text-base font-bold text-white truncate leading-tight">
-                {pkg.title}
-              </h3>
-              <span className="text-[10px] text-slate-300 mt-0.5 block">
-                ${basePrice.toLocaleString()} · {pkg.durationDays}D / {pkg.durationDays - 1}N
-              </span>
+              <span className="text-[9px] uppercase tracking-widest text-gold-400 font-extrabold block mb-0.5">Itinerary · {pkg.category || 'Signature'}</span>
+              <h3 className="font-serif text-sm sm:text-base font-bold text-white truncate leading-tight">{pkg.title}</h3>
             </div>
           </div>
         </div>
 
-        {/* ─── BODY (scrollable, tracks scroll) ─── */}
-        <div
-          ref={bodyRef}
-          onScroll={handleBodyScroll}
-          className="p-6 sm:p-8 sm:overflow-y-auto sm:flex-1"
-        >
+        <div ref={bodyRef} onScroll={handleBodyScroll} className="p-6 sm:p-8 sm:overflow-y-auto sm:flex-1">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* LEFT — Timeline */}
+            
             <div className="lg:col-span-2">
               <h3 className="font-serif text-lg sm:text-xl font-bold text-ocean-900 dark:text-slate-100 border-b border-gold-500/20 pb-3 mb-6 flex items-center">
-                <i className="fas fa-route text-gold-500 mr-2.5" />
-                Your Journey Blueprint
+                <i className="fas fa-route text-gold-500 mr-2.5" /> Your Journey Blueprint
               </h3>
 
               <div className="relative border-l-2 border-gold-500/40 ml-2 pl-6 space-y-7">
                 {pkg.itinerary?.map((item, idx) => (
                   <div key={idx} className="relative">
-                    {/* Timeline dot */}
                     <div className="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-gold-500 border-4 border-white dark:border-slate-900 shadow-md" />
-
                     <span className="text-[10px] font-extrabold text-gold-600 dark:text-gold-400 uppercase tracking-widest block mb-1">
                       {item.day}
                     </span>
@@ -212,82 +124,61 @@ export default function PackageItineraryModal({
               </div>
             </div>
 
-            {/* RIGHT — Booking sidebar */}
             <aside className="lg:sticky lg:top-4 h-fit">
               <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-800/60 border-2 border-gold-500/40 shadow-lg">
-                {/* Price */}
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest block font-bold">
-                  Estimated Investment
+                  Package Rate
                 </span>
-                <div className="font-serif text-3xl sm:text-4xl font-extrabold text-ocean-900 dark:text-slate-100 mt-1.5">
+                {/* 👇 Changed to font-poppins for better number display */}
+                <div className="font-poppins text-3xl sm:text-4xl font-bold text-ocean-900 dark:text-slate-100 mt-1.5 tracking-tight">
                   <span className="text-gold-600 dark:text-gold-400">$</span>
-                  {basePrice.toLocaleString()}
+                  {totalPrice.toLocaleString()}
                 </div>
-                <span className="text-[11px] text-slate-500 dark:text-slate-400 block mt-1.5">
-                  Per guest · all-inclusive
-                </span>
+                
+                {pkg.pricingNote ? (
+                  <span className="inline-block mt-2 px-2 py-1 bg-gold-500/10 text-gold-700 dark:text-gold-400 text-[10px] font-bold uppercase tracking-wider rounded-md border border-gold-500/20">
+                    {pkg.pricingNote}
+                  </span>
+                ) : (
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 block mt-1.5">
+                    Total flat rate for the group
+                  </span>
+                )}
 
-                {/* Inclusions
-                <div className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 pt-4 mt-4 border-t border-gold-500/20">
-                  <div className="flex items-start gap-2">
-                    <i className="fas fa-check text-emerald-500 mt-0.5 shrink-0" />
-                    <span>Private VIP Airport Fast-Track</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <i className="fas fa-check text-emerald-500 mt-0.5 shrink-0" />
-                    <span>Luxury SUV &amp; Chauffeur Guide</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <i className="fas fa-check text-emerald-500 mt-0.5 shrink-0" />
-                    <span>Handpicked 4–5★ Hotels</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <i className="fas fa-check text-emerald-500 mt-0.5 shrink-0" />
-                    <span>Flexible Cancellation Policy</span>
-                  </div>
-                </div> */}
-
-                {/* Highlights */}
                 <div className="pt-4 mt-4 border-t border-gold-500/20">
                   <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest block font-bold mb-2.5">
-                    Signature Highlights
+                    Package Highlights
                   </span>
                   <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
-                    {pkg.highlights?.slice(0, 4).map((h) => (
+                    {pkg.highlights?.slice(0, 6).map((h) => (
                       <li key={h} className="flex items-start gap-2">
-                        <i className="fas fa-gem text-gold-500 mt-0.5 text-[9px] shrink-0" />
+                        <i className="fas fa-check text-emerald-500 mt-0.5 text-[10px] shrink-0" />
                         <span>{h}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Reserve CTA */}
                 <button
                   type="button"
                   onClick={() => onReserve(pkg)}
                   className="w-full mt-6 bg-gradient-to-r from-gold-500 via-amber-500 to-gold-600 hover:from-gold-600 hover:via-amber-600 hover:to-gold-700 text-ocean-900 font-bold py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest"
                 >
-                  <i className="fas fa-calendar-check" />
-                  Reserve This Expedition
+                  <i className="fas fa-calendar-check" /> Reserve This Expedition
                 </button>
 
                 <p className="text-[10px] text-slate-500 dark:text-slate-400 text-center mt-3">
-                  <i className="fas fa-clock text-gold-500 mr-1" />
-                  Reply within 2 hours
+                  <i className="fas fa-clock text-gold-500 mr-1" /> Reply within 2 hours
                 </p>
               </div>
             </aside>
           </div>
         </div>
 
-        {/* ─── FOOTER ─── */}
         <div className="px-6 sm:px-8 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-wrap rounded-b-3xl shrink-0">
           <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            <i className="fas fa-shield-alt text-gold-500 mr-1.5" />
-            Lanka 360 · SLTDA Licensed TS/2026/0412
+            <i className="fas fa-shield-alt text-gold-500 mr-1.5" /> Lanka 360 · SLTDA Licensed TS/2026/0412
           </p>
-          
         </div>
       </div>
     </div>

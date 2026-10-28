@@ -114,6 +114,7 @@ export default function App() {
         isOpen={plannerOpen} 
         onClose={() => setPlannerOpen(false)} 
       />
+
     </>
   );
 }

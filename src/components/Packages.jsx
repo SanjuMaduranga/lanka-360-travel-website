@@ -1,8 +1,7 @@
 import { packagesList } from '../data/siteData';
 
 export default function Packages() {
-  // Showing 4 packages just as an example (you can change this back to 3)
-  const previewPackages = packagesList.slice(0, 4);
+  const previewPackages = packagesList.slice(0, 3);
 
   const openItinerary = (pkg) => {
     if (window.openItineraryModal) {
@@ -11,10 +10,7 @@ export default function Packages() {
   };
 
   return (
-    <section
-      id="packages"
-      className="py-12 bg-[#FAF8F5] dark:bg-slate-950 transition-colors"
-    >
+    <section id="packages" className="py-12 bg-[#FAF8F5] dark:bg-slate-950 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-gold-500 uppercase tracking-widest text-xs font-bold">
@@ -29,10 +25,6 @@ export default function Packages() {
           </p>
         </div>
 
-        {/* 
-          Changed from grid to flexbox with justify-center.
-          This ensures cards are always centered, even if there is only 1 or 2.
-        */}
         <div className="flex flex-wrap justify-center gap-8">
           {previewPackages.map((item) => (
             <article
@@ -67,30 +59,20 @@ export default function Packages() {
                     "{item.tagline}"
                   </p>
                   <ul className="space-y-2 mb-6">
-                    {item.highlights.map((h) => (
-                      <li
-                        key={h}
-                        className="flex items-start text-xs text-slate-700 dark:text-slate-300 font-medium"
-                      >
+                    {item.highlights.slice(0, 4).map((h) => (
+                      <li key={h} className="flex items-start text-xs text-slate-700 dark:text-slate-300 font-medium">
                         <i className="fa-solid fa-gem text-[#B8860B] mr-2.5 mt-0.5 text-[10px]" />
                         <span>{h}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="flex items-center justify-between pt-4 border-t border-[#D4AF37]/20">
-                  <div>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase block font-semibold">
-                      Starting From
-                    </span>
-                    <span className="font-poppins text-xl font-bold text-slate-800 dark:text-slate-100">
-                      <span className="text-[#B8860B]">$</span>
-                      {item.priceUSD.toLocaleString()}
-                    </span>
-                  </div>
+                
+                {/* Price removed, button centered */}
+                <div className="flex justify-center pt-4 border-t border-[#D4AF37]/20 mt-auto">
                   <button
                     onClick={() => openItinerary(item)}
-                    className="bg-gradient-to-r from-[#E5B80B] via-[#D4AF37] to-[#B8860B] text-white font-bold px-4 py-2.5 rounded-xl text-xs uppercase shadow-md hover:opacity-90 transition"
+                    className="w-full bg-gradient-to-r from-[#E5B80B] via-[#D4AF37] to-[#B8860B] text-white font-bold px-4 py-3 rounded-xl text-xs uppercase shadow-md hover:opacity-90 transition"
                   >
                     View Itinerary
                   </button>
@@ -100,12 +82,8 @@ export default function Packages() {
           ))}
         </div>
 
-        {/* View All CTA */}
         <div className="text-center mt-12">
-          <a
-            href="/packages"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
-          >
+          <a href="/packages" className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
             <span>View All Packages</span>
             <i className="fas fa-arrow-right text-xs" />
           </a>

@@ -8,10 +8,9 @@ export default function Header() {
     { name: 'Home', href: '/' },
     { name: 'Destinations', href: '/#destinations' },
     { name: 'Tour Packages', href: '/#packages' },
-    { name: 'Services', href: '/#services' },
     { name: 'Gallery', href: '/#gallery' },
     { name: 'Reviews', href: '/#reviews' },
-    // { name: 'About', href: '/about' },
+    { name: 'About', href: '/#about' },
     { name: 'Contact', href: '/#contact' },
   ];
 

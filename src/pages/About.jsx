@@ -1,283 +1,148 @@
-import { Helmet } from 'react-helmet-async';
 import SEO from '../components/SEO';
-
-const teamMembers = [
-  {
-    name: 'Dinesh Perera',
-    role: 'Founder & Managing Director',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80',
-    bio: 'Born in Kandy, Dinesh has guided Sri Lankan travel for over 18 years. He founded Lanka 360 to share the island\'s hidden gems with the world.',
-  },
-  {
-    name: 'Amaya Fernando',
-    role: 'Head of Guest Experience',
-    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80',
-    bio: 'With a hospitality background from Colombo\'s finest hotels, Amaya ensures every Lanka 360 journey is seamless and personal.',
-  },
-  {
-    name: 'Ruwan Silva',
-    role: 'Lead Chauffeur Guide',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
-    bio: 'Our longest-serving guide — Ruwan has driven travelers from over 40 countries and knows every shortcut and photo spot on the island.',
-  },
-  {
-    name: 'Nadeeka Jayawardena',
-    role: 'Wildlife & Wellness Specialist',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
-    bio: 'A licensed naturalist and Ayurveda consultant, Nadeeka designs our signature safari and retreat experiences.',
-  },
-];
+import { Link } from 'react-router-dom';
 
 const values = [
   {
-    icon: 'fa-heart',
-    title: 'Authentic Sri Lanka',
-    desc: 'We show you the real island — not just the tourist trail. Family-run tea estates, village lunches, and hidden viewpoints.',
-  },
-  {
-    icon: 'fa-leaf',
-    title: 'Sustainable & Responsible',
-    desc: 'We partner with eco-certified hotels and support local communities through every tour we operate.',
-  },
-  {
     icon: 'fa-shield-alt',
-    title: 'Safety First',
-    desc: 'SLTDA-licensed, fully insured, with 24/7 emergency support throughout your journey.',
+    title: 'Safety & Trust',
+    desc: 'Your comfort matters. We provide reliable travel arrangements, clear communication, and personal assistance from start to finish.'
   },
   {
-    icon: 'fa-star',
-    title: 'Detail-Obsessed',
-    desc: 'From cold towels after safaris to pre-booked train seats — the little things make the difference.',
+    icon: 'fa-user-shield',
+    title: 'Authorised Guiding',
+    desc: 'We arrange guiding services appropriate to your itinerary, prioritising suitably qualified guides where official authorisation is required.'
   },
-];
-
-const milestones = [
-  { year: '2008', title: 'The First Journey', desc: 'Founded in Colombo with a single van and a dream to redefine Sri Lankan travel.' },
-  { year: '2015', title: 'Wildlife Division', desc: 'Launched dedicated safari programs with certified naturalist guides.' },
-  { year: '2020', title: 'Boutique Wellness', desc: 'Introduced curated Ayurveda retreats along the southern coast.' },
-  { year: '2026', title: '10,000+ Happy Travelers', desc: 'Now serving clients from over 60 countries worldwide.' },
+  {
+    icon: 'fa-id-card',
+    title: 'Licensed Drivers',
+    desc: 'We prioritise working with drivers who hold the appropriate driving licences and experience for the services they provide.'
+  },
+  {
+    icon: 'fa-car',
+    title: 'Comfortable Transport',
+    desc: 'We help arrange transportation that suits your group size, luggage, and itinerary requirements. Details confirmed before touring.'
+  },
+  {
+    icon: 'fa-map-marked-alt',
+    title: 'Personalised Plans',
+    desc: 'Whether you prefer culture, wildlife, hiking, or beaches, we design an itinerary around your specific interests and budget.'
+  },
+  {
+    icon: 'fa-comments',
+    title: 'Clear Communication',
+    desc: 'We explain the itinerary, inclusions, and costs clearly before you confirm. We coordinate transport and activities seamlessly.'
+  },
+  {
+    icon: 'fa-globe-asia',
+    title: 'Authentic Experiences',
+    desc: 'Discover more than landmarks. We help you explore local culture, regional traditions, food, and lesser-known places.'
+  },
+  {
+    icon: 'fa-hands-helping',
+    title: 'Friendly Support',
+    desc: 'From your first enquiry to the end of your trip, we provide helpful communication so you can travel with confidence.'
+  },
+  {
+    icon: 'fa-hand-holding-heart',
+    title: 'Responsible Tourism',
+    desc: 'We encourage respect for local communities, religious customs, wildlife, and the environment for future generations.'
+  }
 ];
 
 export default function About() {
   return (
     <>
       <SEO
-        title="About Lanka 360 | Our Story, Team & Why Travel With Us"
-        description="Meet the Lanka 360 team. Founded in 2008, we've guided 10,000+ travelers through Sri Lanka with SLTDA-licensed chauffeurs and bespoke itineraries."
-        keywords="about Lanka 360, Sri Lanka travel agency team, best Sri Lanka tour operator, SLTDA licensed travel company"
+        title="About Lanka 360 Travels | Discover the Real Sri Lanka"
+        description="Learn about Lanka 360 Travels. We provide personalised tours, comfortable transportation, and responsible guiding services in Sri Lanka."
         url="https://lanka360.com/about"
       />
 
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'AboutPage',
-            name: 'About Lanka 360',
-            url: 'https://lanka360.com/about',
-            mainEntity: {
-              '@type': 'TravelAgency',
-              name: 'Lanka 360',
-              foundingDate: '2008',
-              description:
-                'Luxury Sri Lanka tour operator offering bespoke private journeys across the island.',
-            },
-          })}
-        </script>
-      </Helmet>
-
-      <main>
+      <main className="bg-[#FAF8F5] dark:bg-slate-950 transition-colors">
+        
         {/* ─── HERO ─── */}
-        <section className="relative bg-ocean-900 text-white overflow-hidden">
+        <section className="relative bg-ocean-900 text-white overflow-hidden py-32 lg:py-40">
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(10, 25, 47, 0.6), rgba(10, 25, 47, 0.85)), url('https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=1920&q=80')",
-            }}
+            className="absolute inset-0 bg-cover bg-center opacity-30"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=1920&q=80')" }}
           />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-28 text-center z-10">
+          <div className="absolute inset-0 bg-gradient-to-t from-ocean-900 via-ocean-900/80 to-transparent" />
+          
+          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/20 backdrop-blur-md border border-gold-400/40 text-gold-400 text-xs font-bold uppercase tracking-widest mb-4">
-              <i className="fas fa-heart" /> Our Story
+              <i className="fas fa-compass" /> Our Story
             </span>
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight">
-              Travel Sri Lanka{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-amber-200 to-gold-500">
-                The Right Way
-              </span>
+            <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight mb-6 leading-tight drop-shadow-md">
+              Lanka 360 Travels
             </h1>
-            <p className="text-slate-200 text-base sm:text-lg max-w-3xl mx-auto font-light leading-relaxed mb-8">
-              Since 2008, Lanka 360 has designed private, luxury journeys for
-              travelers who want more than a checklist - they want the soul of
-              the island.
+            <p className="text-lg sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
+              Your journey. Your experience. Your Sri Lanka.
             </p>
-
-            <nav className="flex justify-center items-center gap-3 text-xs text-slate-300 font-medium">
-              <a href="/" className="hover:text-gold-400 transition">Home</a>
-              <i className="fas fa-chevron-right text-[9px] text-gold-500" />
-              <span className="text-gold-400">About</span>
-            </nav>
           </div>
         </section>
 
-        {/* ─── STORY ─── */}
-        <section className="py-24 bg-[#FAF8F5] dark:bg-slate-950 transition-colors">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* ─── STATS BAR ─── */}
+        <section className="relative -mt-12 z-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-x-0 md:divide-x divide-slate-200 dark:divide-slate-800">
             <div>
-              <span className="text-gold-600 dark:text-gold-400 uppercase tracking-widest text-xs font-bold">
-                <i className="fas fa-book-open mr-1" /> The Lanka 360 Story
-              </span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ocean-900 dark:text-slate-100 mt-2 mb-6 leading-tight">
-                More Than a Tour Operator — <span className="text-gold-500">A Local Friend</span>
-              </h2>
-              <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
-                <p>
-                  Lanka 360 was born in 2008 when our founder Dinesh Perera
-                  returned to his hometown of Kandy after years of guiding
-                  travelers across Asia. He noticed that most tourists only saw
-                  the same five landmarks - Sigiriya, Kandy, Ella, Galle, Yala —
-                  then flew home, never knowing the island he grew up in.
-                </p>
-                <p>
-                  So Dinesh started Lanka 360 with a single van, a promise, and
-                  one belief: <strong className="text-ocean-900 dark:text-slate-200">travel should feel like visiting a
-                  friend, not checking off a list.</strong> Today, we're a
-                  team of 24 Sri Lankan chauffeurs, naturalists, wellness
-                  specialists, and planners who've welcomed over 10,000
-                  travelers from 60+ countries.
-                </p>
-                <p>
-                  Every itinerary we craft is hand-built around you — your
-                  pace, your interests, your budget. No cookie-cutter tours. No
-                  tourist traps. Just Sri Lanka, as it was meant to be seen.
-                </p>
-              </div>
+              <div className="font-serif text-3xl font-bold text-gold-500 mb-1">100%</div>
+              <div className="text-[10px] uppercase tracking-widest font-bold text-slate-500 dark:text-slate-400">Tailor-Made</div>
             </div>
-
-            {/* Stats Card */}
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { num: '10K+', label: 'Happy Travelers' },
-                { num: '18+', label: 'Years Experience' },
-                { num: '60+', label: 'Countries Served' },
-                { num: '4.9★', label: 'Average Rating' },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-[#D4AF37]/30 shadow-md text-center"
-                >
-                  <div className="font-serif text-3xl sm:text-4xl font-black text-gold-500 mb-1">
-                    {s.num}
-                  </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
-                    {s.label}
-                  </div>
-                </div>
-              ))}
+            <div>
+              <div className="font-serif text-3xl font-bold text-gold-500 mb-1">24/7</div>
+              <div className="text-[10px] uppercase tracking-widest font-bold text-slate-500 dark:text-slate-400">Local Support</div>
+            </div>
+            <div>
+              <div className="font-serif text-3xl font-bold text-gold-500 mb-1">Vetted</div>
+              <div className="text-[10px] uppercase tracking-widest font-bold text-slate-500 dark:text-slate-400">Drivers</div>
+            </div>
+            <div>
+              <div className="font-serif text-3xl font-bold text-gold-500 mb-1">Trusted</div>
+              <div className="text-[10px] uppercase tracking-widest font-bold text-slate-500 dark:text-slate-400">Service</div>
             </div>
           </div>
         </section>
 
-        {/* ─── TEAM ─── */}
-        <section className="py-24 bg-white dark:bg-slate-900 transition-colors">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-14">
-              <span className="text-gold-600 dark:text-gold-400 uppercase tracking-widest text-xs font-bold">
-                <i className="fas fa-users mr-1" /> The People Behind Lanka 360
-              </span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ocean-900 dark:text-slate-100 mt-2 mb-4">
-                Meet Our Team
-              </h2>
-              <p className="text-slate-600 dark:text-slate-400">
-                Sri Lankans who love their island — and love showing it to you.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {teamMembers.map((m) => (
-                <div
-                  key={m.name}
-                  className="bg-slate-50 dark:bg-slate-800 rounded-3xl p-6 border border-slate-200 dark:border-slate-700 hover:border-gold-500/40 hover:shadow-xl transition-all text-center group"
-                >
-                  <div className="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-gold-500/30 mb-4 group-hover:border-gold-500 transition-colors">
-                    <img
-                      src={m.image}
-                      alt={m.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="font-serif text-lg font-bold text-ocean-900 dark:text-slate-100">
-                    {m.name}
-                  </h3>
-                  <p className="text-[11px] text-gold-600 dark:text-gold-400 font-bold uppercase tracking-wider mb-3">
-                    {m.role}
-                  </p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {m.bio}
-                  </p>
-                </div>
-              ))}
-            </div>
+        {/* ─── INTRODUCTION ─── */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-ocean-900 dark:text-slate-100 mb-6">
+              Welcome to <span className="text-gold-500">Paradise</span>
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed mb-6">
+              Welcome to Lanka 360 Travels, your travel partner for discovering the beauty, culture, history, wildlife, and unforgettable experiences of Sri Lanka. From ancient kingdoms and sacred temples to misty mountains, lush tea plantations, tropical beaches, and exciting wildlife safaris, Sri Lanka offers something special for every traveller.
+            </p>
+            <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
+              At Lanka 360 Travels, we help you explore the island through personalised tours, comfortable transportation, knowledgeable guiding services, and friendly local support. Whether you are travelling alone, as a couple, with family, or in a group, we aim to make your journey comfortable, memorable, and stress-free.
+            </p>
           </div>
         </section>
 
-        {/* ─── MILESTONES ─── */}
-        <section className="py-24 bg-[#f7f4ed] dark:bg-slate-950 transition-colors">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <span className="text-gold-600 dark:text-gold-400 uppercase tracking-widest text-xs font-bold">
-                <i className="fas fa-flag mr-1" /> Our Journey
+        {/* ─── WHY CHOOSE US (MODERN GRID) ─── */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <span className="text-gold-500 uppercase tracking-widest text-xs font-bold mb-2 block">
+                Our Standards
               </span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ocean-900 dark:text-slate-100 mt-2">
-                Milestones That Shaped Us
+              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ocean-900 dark:text-slate-100">
+                Why Choose <span className="text-gold-500">Lanka 360 Travels?</span>
               </h2>
             </div>
 
-            <div className="relative border-l-2 border-gold-500/30 pl-8 space-y-10">
-              {milestones.map((m) => (
-                <div key={m.year} className="relative">
-                  <div className="absolute -left-11 w-6 h-6 rounded-full bg-gold-500 border-4 border-white dark:border-slate-950" />
-                  <div className="text-gold-600 dark:text-gold-400 font-bold text-sm tracking-widest">
-                    {m.year}
-                  </div>
-                  <h3 className="font-serif text-xl font-bold text-ocean-900 dark:text-slate-100 mt-1 mb-2">
-                    {m.title}
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                    {m.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── VALUES ─── */}
-        <section className="py-24 bg-white dark:bg-slate-900 transition-colors">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-14">
-              <span className="text-gold-600 dark:text-gold-400 uppercase tracking-widest text-xs font-bold">
-                <i className="fas fa-gem mr-1" /> What We Stand For
-              </span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ocean-900 dark:text-slate-100 mt-2">
-                Our Values
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {values.map((v) => (
-                <div
-                  key={v.title}
-                  className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-center hover:border-gold-500/40 transition"
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {values.map((v, i) => (
+                <div 
+                  key={i} 
+                  className="group bg-[#FAF8F5] dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-gold-500/50 transition-all duration-300 transform hover:-translate-y-1"
                 >
-                  <div className="w-14 h-14 mx-auto rounded-xl bg-gold-500/10 border border-gold-500/20 text-gold-500 flex items-center justify-center text-xl mb-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gold-500/10 text-gold-600 dark:text-gold-400 flex items-center justify-center text-xl mb-6 group-hover:bg-gold-500 group-hover:text-ocean-900 transition-colors duration-300">
                     <i className={`fas ${v.icon}`} />
                   </div>
-                  <h3 className="font-bold text-ocean-900 dark:text-slate-100 mb-2">
+                  <h3 className="font-serif text-xl font-bold text-ocean-900 dark:text-slate-100 mb-3">
                     {v.title}
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     {v.desc}
                   </p>
                 </div>
@@ -286,37 +151,42 @@ export default function About() {
           </div>
         </section>
 
-        {/* ─── CTA ─── */}
-        <section className="relative py-20 bg-gradient-to-r from-ocean-900 via-ocean-800 to-slate-900 text-white overflow-hidden">
-          <div className="absolute -top-20 -right-20 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl" />
-          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-400 text-xs font-bold uppercase tracking-widest mb-4">
-              <i className="fas fa-paper-plane mr-1" /> Ready to Travel?
-            </span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold mb-4">
-              Let's Plan Something Extraordinary
-            </h2>
-            <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-sm sm:text-base">
-              Tell us what you dream of — we'll make it real.
-            </p>
-            <div className="flex flex-wrap justify-center items-center gap-4">
-              <a
-                href="/packages"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold px-8 py-4 rounded-full shadow-xl transition-all hover:-translate-y-0.5"
-              >
-                <i className="fas fa-suitcase-rolling" />
-                <span>Browse Packages</span>
-              </a>
-              <a
-                href="/contact"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold px-8 py-4 rounded-full shadow-xl transition-all hover:-translate-y-0.5 backdrop-blur-sm"
-              >
-                <i className="fas fa-envelope" />
-                <span>Contact Us</span>
-              </a>
+        {/* ─── OUR PROMISE ─── */}
+        <section className="py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto bg-ocean-900 rounded-[40px] overflow-hidden relative shadow-2xl border border-slate-800">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:20px_20px]" />
+            <div className="absolute -top-32 -right-32 w-96 h-96 bg-gold-500/20 rounded-full blur-3xl" />
+            
+            <div className="relative p-10 sm:p-16 text-center z-10">
+              <div className="w-20 h-20 mx-auto rounded-2xl bg-gold-500/20 border border-gold-500/40 text-gold-400 flex items-center justify-center text-3xl mb-8 shadow-[0_0_30px_rgba(212,175,55,0.2)]">
+                <i className="fas fa-handshake" />
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-6">
+                Our Promise to You
+              </h2>
+              <p className="text-slate-300 text-lg sm:text-xl leading-relaxed italic max-w-3xl mx-auto mb-10 font-light">
+                "We aim to deliver honest communication, carefully coordinated travel arrangements, and a welcoming service that helps you experience Sri Lanka with confidence."
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link
+                  to="/packages"
+                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-ocean-900 font-bold px-8 py-4 rounded-full shadow-lg transition-all hover:-translate-y-0.5"
+                >
+                  <span>Explore Our Tours</span>
+                  <i className="fas fa-arrow-right text-xs" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-8 py-4 rounded-full shadow-lg backdrop-blur-md transition-all hover:-translate-y-0.5"
+                >
+                  <span>Contact Us</span>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
+
       </main>
     </>
   );

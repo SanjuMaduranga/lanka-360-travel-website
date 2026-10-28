@@ -62,7 +62,6 @@ export default function Packages() {
     setSortBy('popular');
   };
 
-  // 👇 Opens STEP 1 — the itinerary modal
   const openItinerary = (pkg) => {
     if (window.openItineraryModal) {
       window.openItineraryModal(pkg);
@@ -129,7 +128,7 @@ export default function Packages() {
               </span>
             </h1>
             <p className="text-slate-200 text-base sm:text-lg max-w-3xl mx-auto font-light leading-relaxed mb-8">
-              From 4-day cultural escapes to 14-day grand circuits — every
+              From 4-day cultural escapes to 14-day grand circuits - every
               itinerary is private, chauffeur-driven, and fully customisable.
             </p>
             <nav className="flex justify-center items-center gap-3 text-xs text-slate-300 font-medium">
@@ -143,7 +142,8 @@ export default function Packages() {
         </section>
 
         {/* ─── FILTER BAR ─── */}
-        <section className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-20 z-30 shadow-sm transition-colors">
+        {/* 👇 FIXED: Added lg:sticky lg:top-20 so it doesn't block mobile screens */}
+        <section className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 lg:sticky lg:top-20 z-30 shadow-sm transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
             <div className="flex flex-wrap items-center gap-2 mb-4">
               {CATEGORIES.map((c) => (
@@ -289,7 +289,7 @@ export default function Packages() {
                           "{item.tagline}"
                         </p>
                         <ul className="space-y-2 mb-6">
-                          {item.highlights.map((h) => (
+                          {item.highlights.slice(0, 4).map((h) => (
                             <li
                               key={h}
                               className="flex items-start text-xs text-slate-700 dark:text-slate-300 font-medium"
@@ -301,23 +301,11 @@ export default function Packages() {
                         </ul>
                       </div>
 
-                      <div className="flex items-center justify-between pt-4 border-t border-[#D4AF37]/20 mt-auto">
-                        <div>
-                          <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block font-semibold">
-                            From
-                          </span>
-                          <span className="font-serif text-xl font-extrabold text-slate-900 dark:text-slate-100">
-                            <span className="text-[#B8860B]">$</span>
-                            {item.priceUSD.toLocaleString()}
-                          </span>
-                          <span className="text-[10px] text-slate-500 dark:text-slate-400">
-                            {' '}
-                            / guest
-                          </span>
-                        </div>
+                      {/* 👇 Price removed. Button is now full width to match Home page */}
+                      <div className="flex justify-center pt-4 border-t border-[#D4AF37]/20 mt-auto">
                         <button
                           onClick={() => openItinerary(item)}
-                          className="bg-gradient-to-r from-[#E5B80B] via-[#D4AF37] to-[#B8860B] text-white font-bold px-4 py-2.5 rounded-xl text-[11px] uppercase tracking-wider shadow-md hover:opacity-90 transition"
+                          className="w-full bg-gradient-to-r from-[#E5B80B] via-[#D4AF37] to-[#B8860B] text-white font-bold px-4 py-3 rounded-xl text-xs uppercase shadow-md hover:opacity-90 transition"
                         >
                           View Itinerary
                         </button>
